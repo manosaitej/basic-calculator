@@ -1,0 +1,22 @@
+async function calculate() {
+    try {
+        const response = await fetch('http://localhost:5000/api/calculate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ expression: screen.value })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            screen.value = data.result;
+        } else {
+            throw new Error(data.error);
+        }
+    } catch (error) {
+        screen.value = 'Error';
+        setTimeout(clearScreen, 1500);
+    }
+}
